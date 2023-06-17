@@ -50,7 +50,7 @@ exports.findOne = (req, res, next) => {
     categoryId: req.params.id,
      
   };
-  categoriesService.getCategoriesById(model, (error, results) => {
+  categoriesService.getCategoryById(model, (error, results) => {
     if (error) {
       return next(error);
     } else {
@@ -82,7 +82,7 @@ exports.update = (req, res, next) => {
         } else {
           return res.status(200).send({
             message: "Success",
-            data: results,
+            data: results, 
           });
         }
       });

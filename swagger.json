@@ -137,8 +137,8 @@
                         "name": "categoryName",
                         "in": "formData",
                         "required": true,
-                        "description": "Categiry Name",
-                        "type": "interger"
+                        "description": "Category Name",
+                        "type": "string"
                     },
                     {
                         "name": "categoryDescription",
