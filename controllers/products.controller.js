@@ -14,7 +14,7 @@ exports.create = (req, res, next) => {
         productShortDescription: req.body.productShortDescription,
         productDescription: req.body.productDescription,
         productPrice: req.body.productPrice,
-        productSalsePrice: req.body.productSalsePrice,
+        productSalePrice: req.body.productSalePrice,
         productSKU: req.body.productSKU,
         productType: req.body.productType,
         stockStatus: req.body.stockStatus,
@@ -36,10 +36,12 @@ exports.create = (req, res, next) => {
 
 exports.findALL = (req, res, next) => {
   var model = {
+    productIds:req.query.productIds,
     productName: req.query.productName,
     category: req.query.categoryId,
     pageSize: req.query.pageSize,
     page: req.query.page,
+    sort: req.query.sort,
   };
   productServices.getProducts(model, (err, result) => {
     if (err) {
@@ -104,17 +106,17 @@ exports.update = (req, res, next) => {
 };
 
 exports.delete = (req, res, next) => {
-    var model = {
-      productId: req.params.id,
-    };
-    productServices.deleteProduct(model, (err, result) => {
-      if (err) {
-        return next(err);
-      } else {
-        return res.status(200).send({
-          message: "Success",
-          data: result,
-        });
-      }
-    });
+  var model = {
+    productId: req.params.id,
   };
+  productServices.deleteProduct(model, (err, result) => {
+    if (err) {
+      return next(err);
+    } else {
+      return res.status(200).send({
+        message: "Success",
+        data: result,
+      });
+    }
+  });
+};

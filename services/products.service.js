@@ -32,7 +32,7 @@ async function createProduct(params, calback) {
 
 async function getProducts(params, calback) {
   const productName = params.productName;
-  const categoryId = params.categoryId;
+  const categoryId = params.category;
   var condition = {};
   if (productName) {
     condition["productName"] = {
@@ -43,19 +43,34 @@ async function getProducts(params, calback) {
   if (categoryId) {
     condition["category"] = categoryId;
   }
+
+  if (params.productIds) {
+    condition["_id"] = {
+      $in: params.productIds.split(","),
+    };
+  }
+
   let perPage = Math.abs(params.pageSize) || MONGO_DB_CONFIG.PAGE_SIZE;
   let page = (Math.abs(params.page) || 1) - 1;
 
   product
     .find(
       condition,
-      "productId productName productName productShortDescription productPrice productSalePrice productImage productSKU productType stockStatus"
+      "productId productName productShortDescription productPrice productSalePrice productImage productSKU productType stockStatus  createAt updateAt"
     )
+    .sort(params.sort)
     .populate("category", "categoryName categoryImage")
+    .populate("relatedProducts", "relatedProduct")
     .limit(perPage)
     .skip(perPage * page)
     .then((response) => {
-      return calback(null, response);
+      var res = response.map((r) => {
+        if (r.relatedProducts.length > 0) {
+          r.relatedProducts = r.relatedProducts.map((x) => x.relatedProduct);
+        }
+        return r;
+      });
+      return calback(null, res);
     })
     .catch((error) => {
       return calback(error);
@@ -65,9 +80,13 @@ async function getProducts(params, calback) {
 async function getProductById(params, calback) {
   const productId = params.productId;
   product
-    .find(productId)
+    .findById(productId)
     .populate("category", "categoryName categoryImage")
+    .populate("relatedProducts", "relatedProduct")
     .then((response) => {
+      response.relatedProducts = response.relatedProducts.map((x) => {
+        return x.relatedProduct;
+      });
       return calback(null, response);
     })
     .catch((error) => {
@@ -76,7 +95,7 @@ async function getProductById(params, calback) {
 }
 
 async function updateProduct(params, calback) {
-  const productId = params.productId;
+  const productId = params.id;
   product
     .findByIdAndUpdate(productId, params, { useFindAndModify: false })
 
@@ -91,7 +110,7 @@ async function updateProduct(params, calback) {
 }
 
 async function deleteProduct(params, calback) {
-  const productId = params.productId;
+  const productId = params.id;
   product
     .findByIdAndRemove(productId, params, { useFindAndModify: false })
     .then((response) => {

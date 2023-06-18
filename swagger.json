@@ -27,6 +27,7 @@
         "application/json"
     ],
     "paths": {
+        
         "/api/category": {
             "get": {
                 "tags": [
@@ -176,36 +177,148 @@
                     }
                 }
             }
-        }
-    },
-    "definitions": {
-        "Category": {
-            "required": [
-                "categoryName",
-                "_id"
-            ],
-            "properties": {
-                "_id": {
-                    "type": "interger",
-                    "uniqueItems": true
-                },
-                "categoryName": {
-                    "type": "string"
-                },
-                "categoryImage": {
-                    "type": "string"
+        },
+        "/api/product": {
+            "get": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "",
+                "parameters": [
+                    {
+                        "name": "productName",
+                        "in": "query",
+                        "required": false,
+                        "description": "Categiry Name",
+                        "type": "string"
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "required": false,
+                        "description": "Page Number",
+                        "type": "interger",
+                        "default": 1
+                    },
+                    {
+                        "name": "pageSize",
+                        "in": "query",
+                        "required": false,
+                        "description": "Page Size",
+                        "type": "interger",
+                        "default": 10
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ServiceResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Create Product API",
+                "parameters": [
+                    {
+                        "name": "productName",
+                        "in": "formData",
+                        "required": true,
+                        "description": "product Name",
+                        "type": "string"
+                    },
+                    {
+                        "name": "category",
+                        "in": "formData",
+                        "description": "Categiry ID",
+                        "type": "mongoose.Schema.Types.ObjectId"
+                    },
+                    {
+                        "name": "productDescription",
+                        "in": "formData",
+                        "description": "product Description",
+                        "type": "string"
+                    },
+                    {
+                        "name": "productShortDescription",
+                        "in": "formData",
+                        "description": "product Short Description",
+                        "type": "string"
+                    },
+                    {
+                        "name": "productPrice",
+                        "in": "formData",
+                        "description": "product Price  ",
+                        "type": "interger"
+                    },
+                    {
+                        "name": "productSalsePrice",
+                        "in": "formData",
+                        "description": "product SalePrice  ",
+                        "type": "interger"
+                    },
+                    {
+                        "name": "productType",
+                        "in": "formData",
+                        "description": "product Type  ",
+                        "type": "string"
+                    },
+                    {
+                        "name": "productSKU",
+                        "in": "formData",
+                        "description": "product SKU  ",
+                        "type": "string"
+                    },
+                    {
+                        "name": "productImage",
+                        "in": "formData",
+                        "description": "Image Product  ",
+                        "type": "file"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ServiceResponse"
+                        }
+                    }
                 }
             }
         },
-        "ServiceResponse": {
-            "properties": {
-                "messsage": {
-                    "type": "string"
-                },
-                "data": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/ServiceResponse"
+        "definitions": {
+            "Category": {
+                "required": [
+                    "categoryName",
+                    "_id"
+                ],
+                "properties": {
+                    "_id": {
+                        "type": "interger",
+                        "uniqueItems": true
+                    },
+                    "categoryName": {
+                        "type": "string"
+                    },
+                    "categoryImage": {
+                        "type": "string"
+                    }
+                }
+            },
+            "ServiceResponse": {
+                "properties": {
+                    "messsage": {
+                        "type": "string"
+                    },
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/definitions/ServiceResponse"
+                        }
                     }
                 }
             }
