@@ -10,7 +10,7 @@ function authenticationToken(req, res, next) {
 
   jwt.verify(token, TOKEN_KEY, (err, user) => {
     if (err) return res.status(401).send({ message: "Unathorized" });
-    req.user = user;
+    req.user = user.data;
     next();
   });
 }

@@ -76,27 +76,27 @@ async function updateSlider(params, callback) {
 }
 
 async function deleteSlider(params, callback) {
-    const sliderId = params.sliderId;
-  
-    slider
-      .findByIdAndRemove(sliderId )
-  
-      .then((response) => {
-        if (!response) {
-          return callback("Not Found");
-        } else {
-          return callback(null, response);
-        }
-      })
-      .catch((error) => {
-        return callback(error);
-      });
-  }
-  
-  module.exports={
-    createSlider,
-    getSliders,
-    getSliderById,
-    updateSlider,
-    deleteSlider
-  }
+  const sliderId = params.sliderId;
+
+  slider
+    .findByIdAndRemove(sliderId)
+
+    .then((response) => {
+      if (!response) {
+        return callback("Not Found");
+      } else {
+        return callback(null, response);
+      }
+    })
+    .catch((error) => {
+      return callback(error);
+    });
+}
+
+module.exports = {
+  createSlider,
+  getSliders,
+  getSliderById,
+  updateSlider,
+  deleteSlider,
+};
