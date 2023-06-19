@@ -32,6 +32,7 @@ async function getSliders(params, callback) {
     .limit(perPage)
     .skip(perPage * page)
     .then((response) => {
+      
       return callback(null, response);
     })
     .catch((error) => {
@@ -43,7 +44,7 @@ async function getSliderById(params, callback) {
   const sliderId = params.sliderId;
 
   slider
-    .findById(slider)
+    .findById(sliderId)
 
     .then((response) => {
       if (!response) {

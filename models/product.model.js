@@ -34,7 +34,7 @@ const product = mongoose.model(
         required: true,
         default: "simple",
       },
-      stockStatus: {
+      stackStatus: {
         type: String,
         default: "IN",
       },

@@ -17,7 +17,7 @@ exports.create = (req, res, next) => {
         productSalePrice: req.body.productSalePrice,
         productSKU: req.body.productSKU,
         productType: req.body.productType,
-        stockStatus: req.body.stockStatus,
+        stackStatus: req.body.stackStatus,
         productImage: path != "" ? "/" + path : "",
       };
       productServices.createProduct(model, (err, result) => {
@@ -88,7 +88,7 @@ exports.update = (req, res, next) => {
         productSalsePrice: req.body.productSalsePrice,
         productSKU: req.body.productSKU,
         productType: req.body.productType,
-        stockStatus: req.body.stockStatus,
+        stackStatus: req.body.stackStatus,
         productImage: path != "" ? "/" + path : "",
       };
       productServices.updateProduct(model, (err, result) => {

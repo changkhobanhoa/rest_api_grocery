@@ -23,14 +23,13 @@ const cart = mongoose.model(
     },
     {
       toJSON: {
-        transform: function (model, ret) {
+        transform: function (doc, ret) {
           ret.cartId = ret._id.toString();
           delete ret._id;
           delete ret.__v;
         },
       },
-    },{
-        timestamps:true
+      timestamps: true,
     }
   )
 );

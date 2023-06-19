@@ -23,26 +23,49 @@ async function addCart(params, callback) {
           });
       } else if (cartDB.products.length == 0) {
         cartDB.products = params.products;
-        cartDB.save();
-        return callback(null, cartDB);
+        cartDB
+          .save()
+          .then((response) => {
+            return callback(null, response);
+          })
+          .catch((error) => {
+            return callback(error);
+          });
       } else {
-        async.eachSeries(params.products, function (product, asyncDone) {
-          let itemIndex = cartDB.products.findIndex(
-            (p) => p.product == product.product
-          );
+        async.eachSeries(
+          params.products,
+          function (product, asyncDone) {
+            let itemIndex = cartDB.products.findIndex(
+              (p) => p.product == product.product
+            );
 
-          if (itemIndex === -1) {
-            cartDB.products.push({
-              product: product.product,
-              qty: product.qty,
-            });
-          } else {
-            cartDB.products[itemIndex].qty =
-              cartDB.products[itemIndex].qty + product.qty;
+            if (itemIndex === -1) {
+              cartDB.products.push({
+                product: product.product,
+                qty: product.qty,
+              });
+            } else {
+              cartDB.products[itemIndex].qty =
+                cartDB.products[itemIndex].qty + product.qty;
+            }
 
-            cartDB.save(asyncDone);
+            cartDB
+              .save()
+              .then(() => {
+                asyncDone();
+              })
+              .catch((error) => {
+                asyncDone(error);
+              });
+          },
+          function (err) {
+            if (err) {
+              return callback(err);
+            } else {
+              return callback(null, cartDB);
+            }
           }
-        });
+        );
       }
     })
     .catch((err) => {
@@ -51,28 +74,34 @@ async function addCart(params, callback) {
 }
 
 async function getCart(params, callback) {
-  cart
-    .findOne({ userId: params.userId })
-    .populate({
-      path: "products",
-      populate: {
-        path: "product",
-        model: "Product",
-        select: "productName productPrice productSalePrice productImage",
+  try {
+    const response = await cart
+      .findOne({ userId: params.userId })
+      .populate({
+        path: "products",
         populate: {
-          path: "category",
-          model: "Category",
-          select: "categoryName",
+          path: "product",
+          model: "Product",
+          select: "productName productPrice productSalePrice productImage",
+          populate: {
+            path: "category",
+            model: "Category",
+            select: "categoryName",
+          },
         },
-      },
-    })
-    .lean()
-    .then((response) => {
-      return callback(null, response);
-    })
-    .catch((error) => {
-      return callback(error);
-    });
+      })
+      .lean();
+      const t = response
+      
+      t.cartId = t._id;
+      
+      delete t._id;
+      // response.data = t;
+      
+    return callback(null, t);
+  } catch (error) {
+    return callback(error);
+  }
 }
 
 async function removeCartItem(params, callback) {
