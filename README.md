@@ -7,8 +7,10 @@
 
 GET ID 
 - http://localhost:4000/api/category
+
 POST
 - http://localhost:4000/api/category
+
 PUT -- update category
 - http://localhost:4000/api/category
  
@@ -21,8 +23,10 @@ DELETE   category
 
 GET ID 
 - http://localhost:4000/api/product
+
 POST
 - http://localhost:4000/api/product
+
 PUT -- update product
 - http://localhost:4000/api/product
  
