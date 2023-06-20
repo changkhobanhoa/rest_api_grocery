@@ -4,6 +4,8 @@ const userController = require("../controllers/users.controller");
 const sliderController = require("../controllers/slider.controller");
 const relatedProductController = require("../controllers/related-product.controller");
 const cartController = require("../controllers/cart.controller");
+const orderController=require("../controllers/order.controller")
+
 const { authenticationToken } = require("../middleware/auth");
 const express = require("express");
 const router = express.Router();
@@ -35,4 +37,7 @@ router.post("/cart", [authenticationToken], cartController.create);
 router.get("/cart", [authenticationToken], cartController.findAll);
 router.delete("/cart", [authenticationToken], cartController.delete);
 
+router.post("/order", [authenticationToken], orderController.create);
+router.get("/order", [authenticationToken], orderController.findAll);
+router.put("/order", [authenticationToken], orderController.update);
 module.exports = router;

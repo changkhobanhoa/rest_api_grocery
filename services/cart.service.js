@@ -91,13 +91,15 @@ async function getCart(params, callback) {
         },
       })
       .lean();
-      const t = response
-      
+    const t = response;
+    if (t != null) {
       t.cartId = t._id;
-      
+
       delete t._id;
-      // response.data = t;
-      
+    }
+
+    // response.data = t;
+
     return callback(null, t);
   } catch (error) {
     return callback(error);
