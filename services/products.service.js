@@ -77,7 +77,7 @@ async function getProducts(params, calback) {
     });
 }
 
-async function getProductById(params, calback) {
+async function getProductById(params, callback) {
   const productId = params.productId;
   product
     .findById(productId)
@@ -87,10 +87,10 @@ async function getProductById(params, calback) {
       response.relatedProducts = response.relatedProducts.map((x) => {
         return x.relatedProduct;
       });
-      return calback(null, response);
+      return callback(null, response);
     })
     .catch((error) => {
-      return calback(error);
+      return callback(error);
     });
 }
 

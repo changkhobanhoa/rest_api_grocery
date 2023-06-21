@@ -34,6 +34,10 @@ router.post("/login", userController.login);
 router.post("/relatedProduct", relatedProductController.create);
 router.delete("/relatedProduct/:id", relatedProductController.delete);
 
+router.post('/favorite',[authenticationToken],favoriteController.create);
+router.post('/favorite/remove',[authenticationToken],favoriteController.deleteFavorite);
+router.get('/favorite',[authenticationToken],favoriteController.findAll);
+
 router.post("/cart", [authenticationToken], cartController.create);
 router.get("/cart", [authenticationToken], cartController.findAll);
 router.delete("/cart", [authenticationToken], cartController.delete);
@@ -42,7 +46,5 @@ router.post("/order", [authenticationToken], orderController.create);
 router.get("/order", [authenticationToken], orderController.findAll);
 router.put("/order", [authenticationToken], orderController.update);
 
-router.get("/product/favorite", [authenticationToken], favoriteController.findAll);
-router.post("/product/favorite", [authenticationToken], favoriteController.create);
-router.post("/product/favorite/remove", [authenticationToken], favoriteController.deleteFavorite);
+ 
 module.exports = router;

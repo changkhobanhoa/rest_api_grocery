@@ -32,13 +32,21 @@ exports.deleteFavorite = (req, res, next) => {
 };
 
 exports.findAll = (req, res, next) => {
-  const userId = req.user.userId;
-  user
-    .find()
-    .then((result) => {
-      return res.status(200).send({ message: "Success", data: result });
-    })
-    .catch((err) => {
-      return res.status(400).send(err);
-    });
+  const params = {
+    userId: req.user.userId,
+    productId: req.body.productId,
+  };
+  favoriteService.getFavorite(params,(err,result)=>{
+    if (err) {
+      return next(err);
+    }
+    if (!result) {
+      return res
+        .status(404)
+        .send({ message: "Product not found in favorites" });
+    }
+    return res.status(200).send({ message: "Success", data: result });
+  });
+  
+   
 };

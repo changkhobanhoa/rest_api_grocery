@@ -18,7 +18,7 @@ async function createFavorite(params, callback) {
       if (response.favorites == null) {
         callback(response);
       }
-      const index = response.favorites.indexOf(
+      const index = response.favorites.findIndex(
         (p) => p.product == params.productId
       );
       if (index === -1) {
@@ -36,15 +36,20 @@ async function createFavorite(params, callback) {
       return callback(err);
     });
 }
-async function getFavorite(userId, callback) {
-  try{
-
-    const users = await user.find({});
-    return callback(user)
-  }catch (err){
-    return callback(err)
+async function getFavorite(params, callback) {
+  // Tìm kiếm user theo token
+  try {
+    const usermodel = await user.findOne({ _id: params.userId });
+    if (!usermodel) {
+      return callback({ message: "Not found user" });
+    }
+    const favorites = usermodel.favorites;
+    const productIds = favorites.map((favorite) => favorite.product);
+    const products = await product.find({ _id: { $in: productIds }})
+    return callback(null, products);
+  } catch (err) {
+    return callback(err);
   }
-  
 }
 
 function removeFavorite(params, callback) {
@@ -65,10 +70,7 @@ function removeFavorite(params, callback) {
         (p) => p.product == params.productId
       );
       if (index === -1) {
-         
         response.favorites.splice(index, 1);
-       
-      
       } else {
         return callback({ message: "Product already in favorites" });
       }
