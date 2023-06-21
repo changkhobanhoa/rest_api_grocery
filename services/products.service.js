@@ -56,7 +56,7 @@ async function getProducts(params, calback) {
   product
     .find(
       condition,
-      "productId productName productShortDescription productPrice productSalePrice productImage productSKU productType stockStatus  createAt updateAt"
+      "productId productName productShortDescription productPrice productSalePrice productImage productSKU productType stackStatus  createAt updateAt"
     )
     .sort(params.sort)
     .populate("category", "categoryName categoryImage")

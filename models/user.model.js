@@ -20,6 +20,14 @@ const user = mongoose.model(
       stripeCustomerID: {
         type: String,
       },
+      favorites: [
+        {
+          product: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Product",
+          },
+        },
+      ],
 
       token: { type: String },
     },

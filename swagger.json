@@ -256,7 +256,7 @@
                         "type": "interger"
                     },
                     {
-                        "name": "productSalsePrice",
+                        "name": "productSalePrice",
                         "in": "formData",
                         "description": "product SalePrice  ",
                         "type": "interger"

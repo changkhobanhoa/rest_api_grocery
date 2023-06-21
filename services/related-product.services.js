@@ -8,6 +8,7 @@ async function addRelatedProduct(params, callback) {
   if (!params.relatedProduct) {
     return callback({ message: "Related Product Id Required" });
   }
+   
   const relatedProductModel = new relatedProduct(params);
   relatedProductModel
     .save()
