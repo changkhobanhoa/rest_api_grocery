@@ -1,7 +1,7 @@
 const { favorite } = require("../models/favorite.model");
 const { user } = require("../models/user.model");
 const { product } = require("../models/product.model");
-const { response } = require("express");
+
 const productService = require("./products.service");
 
 async function createFavorite(params, callback) {
@@ -39,14 +39,26 @@ async function createFavorite(params, callback) {
 async function getFavorite(params, callback) {
   // Tìm kiếm user theo token
   try {
-    const usermodel = await user.findOne({ _id: params.userId });
+    const usermodel = await user.findOne({ _id: params.userId }).populate({
+      path: "favorites",
+      populate: {
+        path: "product",
+        populate:
+        "category"
+       
+      },
+    });
+
     if (!usermodel) {
       return callback({ message: "Not found user" });
     }
     const favorites = usermodel.favorites;
     const productIds = favorites.map((favorite) => favorite.product);
-    const products = await product.find({ _id: { $in: productIds }})
-    return callback(null, products);
+    const products = await product
+      .find({ _id: { $in: productIds } })
+      .populate("category", "categoryName categoryImage");
+    const res = { userId: params.userId, "products ": products };
+    return callback(null, usermodel);
   } catch (err) {
     return callback(err);
   }
