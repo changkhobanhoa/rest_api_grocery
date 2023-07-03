@@ -19,6 +19,9 @@ exports.findAll = (req, res, next) => {
     if (error) {
       return next(error);
     }
+    if (result == null) {
+      return res.status(500).send({ message: "Null ", data: result });
+    }
     return res.status(200).send({ message: "Success", data: result });
   });
 };

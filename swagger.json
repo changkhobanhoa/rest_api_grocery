@@ -290,6 +290,44 @@
                 }
             }
         },
+        "/api/slider":{
+            "get":{"tags":[
+                "Slider"
+            ]},
+            "post":{
+                "tags":["Slider"],
+                "summary":"Create Slider API",
+                "parameters":[
+                    {
+                        "name": "sliderName",
+                        "in": "formData",
+                        "required": true,
+                        "description": "slider Name",
+                        "type": "string"
+                    },
+                    {
+                        "name": "sliderDescription",
+                        "in": "formData",
+                        "description": "slider Description",
+                        "type": "string"
+                    },{
+                        "name": "sliderImage",
+                        "in": "formData",
+                        "required": true,
+                        "description": "Slider Image",
+                        "type": "file"
+                    } 
+                ]
+                , "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ServiceResponse"
+                        }
+                    }
+                }
+            }
+        },
         "definitions": {
             "Category": {
                 "required": [

@@ -43,8 +43,8 @@ async function getFavorite(params, callback) {
       path: "favorites",
       populate: {
         path: "product",
-        populate:
-        "category"
+        model: "Product",
+        select: "productName productPrice productSalePrice productImage",
        
       },
     });
