@@ -2,9 +2,9 @@ const { product } = require("../models/product.model");
 const { category } = require("../models/category.model");
 const { MONGO_DB_CONFIG } = require("../config/app.config");
 
-async function createProduct(params, calback) {
+async function createProduct(params, callback) {
   if (!params.productName) {
-    return calback(
+    return callback(
       {
         message: "Product name required",
       },
@@ -12,7 +12,7 @@ async function createProduct(params, calback) {
     );
   }
   if (!params.category) {
-    return calback(
+    return callback(
       {
         message: "Category required",
       },
@@ -23,14 +23,14 @@ async function createProduct(params, calback) {
   productModel
     .save()
     .then((response) => {
-      return calback(null, response);
+      return callback(null, response);
     })
     .catch((error) => {
-      return calback(error);
+      return callback(error);
     });
 }
 
-async function getProducts(params, calback) {
+async function getProducts(params, callback) {
   const productName = params.productName;
   const categoryId = params.category;
   var condition = {};
@@ -70,10 +70,10 @@ async function getProducts(params, calback) {
         }
         return r;
       });
-      return calback(null, res);
+      return callback(null, res);
     })
     .catch((error) => {
-      return calback(error);
+      return callback(error);
     });
 }
 
@@ -94,32 +94,32 @@ async function getProductById(params, callback) {
     });
 }
 
-async function updateProduct(params, calback) {
+async function updateProduct(params, callback) {
   const productId = params.id;
   product
     .findByIdAndUpdate(productId, params, { useFindAndModify: false })
 
     .then((response) => {
       if (!response) {
-        calback(`Cannot update Product with id ${productId}`, response);
-      } else calback(null, response);
+        callback(`Cannot update Product with id ${productId}`, response);
+      } else callback(null, response);
     })
     .catch((error) => {
-      return calback(error);
+      return callback(error);
     });
 }
 
-async function deleteProduct(params, calback) {
+async function deleteProduct(params, callback) {
   const productId = params.id;
   product
     .findByIdAndRemove(productId, params, { useFindAndModify: false })
     .then((response) => {
       if (!response) {
-        calback(`Cannot update Product with id ${productId}`);
-      } else calback(null, response);
+        callback(`Cannot update Product with id ${productId}`);
+      } else callback(null, response);
     })
     .catch((error) => {
-      return calback(error);
+      return callback(error);
     });
 }
 
