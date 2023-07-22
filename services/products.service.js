@@ -56,7 +56,7 @@ async function getProducts(params, callback) {
   product
     .find(
       condition,
-      "productId productName productShortDescription productPrice productSalePrice productImage productSKU productType stackStatus  createAt updateAt"
+      "productId productName productShortDescription productPrice productSalePrice productImage productSKU productType stackStatus isFavorite  createAt updateAt"
     )
     .sort(params.sort)
     .populate("category", "categoryName categoryImage")

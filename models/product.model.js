@@ -47,6 +47,10 @@ const product = mongoose.model(
           ref: "RelatedProduct",
         },
       ],
+      isFavorite:{
+        type: Boolean,
+        default:false
+      }
     },
     {
       toJSON: {

@@ -47,7 +47,7 @@
                         "in": "query",
                         "required": false,
                         "description": "Page Number",
-                        "type": "interger",
+                        "type": "integer",
                         "default": 1
                     },
                     {
@@ -55,7 +55,7 @@
                         "in": "query",
                         "required": false,
                         "description": "Page Size",
-                        "type": "interger",
+                        "type": "integer",
                         "default": 10
                     }
                 ],
@@ -197,7 +197,7 @@
                         "in": "query",
                         "required": false,
                         "description": "Page Number",
-                        "type": "interger",
+                        "type": "integer",
                         "default": 1
                     },
                     {
@@ -205,7 +205,7 @@
                         "in": "query",
                         "required": false,
                         "description": "Page Size",
-                        "type": "interger",
+                        "type": "integer",
                         "default": 10
                     }
                 ],
@@ -253,13 +253,13 @@
                         "name": "productPrice",
                         "in": "formData",
                         "description": "product Price  ",
-                        "type": "interger"
+                        "type": "integer"
                     },
                     {
                         "name": "productSalePrice",
                         "in": "formData",
                         "description": "product SalePrice  ",
-                        "type": "interger"
+                        "type": "integer"
                     },
                     {
                         "name": "productType",
@@ -336,7 +336,7 @@
                 ],
                 "properties": {
                     "_id": {
-                        "type": "interger",
+                        "type": "integer",
                         "uniqueItems": true
                     },
                     "categoryName": {

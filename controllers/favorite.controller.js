@@ -1,4 +1,6 @@
 const { user } = require("../models/user.model");
+ 
+
 const favoriteService = require("../services/favorites.service");
 
 exports.create = (req, res, next) => {

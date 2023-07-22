@@ -25,8 +25,30 @@ async function createFavorite(params, callback) {
         response.favorites.push({
           product: params.productId,
         });
+        product
+          .findOneAndUpdate(
+            { _id: params.productId },
+            { isFavorite: true },
+            {
+              new: true,
+              upsert: true, // Make this update into an upsert
+            }
+          )
+          .then((r) => {})
+          .catch();
       } else {
-        return callback({ message: "Product already in favorites" });
+        product
+        .findOneAndUpdate(
+          { _id: params.productId },
+          { isFavorite: false },
+          {
+            new: true,
+            upsert: true, // Make this update into an upsert
+          }
+        )
+        .then((r) => {})
+        .catch();
+        return callback({ message: "Đã xoá yêu thích" });
       }
 
       response.save();
@@ -45,7 +67,6 @@ async function getFavorite(params, callback) {
         path: "product",
         model: "Product",
         select: "productName productPrice productSalePrice productImage",
-       
       },
     });
 
@@ -82,6 +103,17 @@ function removeFavorite(params, callback) {
         (p) => p.product == params.productId
       );
       if (index === -1) {
+        product
+          .findOneAndUpdate(
+            { _id: params.productId },
+            { isFavorite: false },
+            {
+              new: true,
+              upsert: true, // Make this update into an upsert
+            }
+          )
+          .then((r) => {})
+          .catch();
         response.favorites.splice(index, 1);
       } else {
         return callback({ message: "Product already in favorites" });
