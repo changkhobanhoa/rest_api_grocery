@@ -10,7 +10,7 @@
         }
     },
     "host": "localhost:4000",
-    "basePath": "/v1",
+    "basePath": "/",
     "tags": [
         {
             "name": "Category",
