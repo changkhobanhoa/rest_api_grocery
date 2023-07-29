@@ -10,11 +10,19 @@
         }
     },
     "host": "localhost:4000",
-    "basePath": "/",
+    "basePath": "/v1",
     "tags": [
         {
             "name": "Category",
             "description": "Category API"
+        },
+        {
+            "name": "Product",
+            "description": "Product API"
+        },
+        {
+            "name": "Slider",
+            "description": "Slider API"
         }
     ],
     "schemes": [
@@ -27,7 +35,6 @@
         "application/json"
     ],
     "paths": {
-        
         "/api/category": {
             "get": {
                 "tags": [
@@ -99,6 +106,18 @@
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/ServiceResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request",
+                        "schema": {
+                            "$ref": "#/definitions/ServiceResponse",
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string"
+                                }
+                            }
                         }
                     }
                 }
@@ -235,12 +254,6 @@
                         "name": "category",
                         "in": "formData",
                         "description": "Categiry ID",
-                        "type": "mongoose.Schema.Types.ObjectId"
-                    },
-                    {
-                        "name": "productDescription",
-                        "in": "formData",
-                        "description": "product Description",
                         "type": "string"
                     },
                     {
@@ -290,14 +303,27 @@
                 }
             }
         },
-        "/api/slider":{
-            "get":{"tags":[
-                "Slider"
-            ]},
-            "post":{
-                "tags":["Slider"],
-                "summary":"Create Slider API",
-                "parameters":[
+        "/api/slider": {
+            "get": {
+                "tags": [
+                    "Slider"
+                ],
+                "description": "List Slider ",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ServiceResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Slider"
+                ],
+                "summary": "Create Slider API",
+                "parameters": [
                     {
                         "name": "sliderName",
                         "in": "formData",
@@ -310,15 +336,16 @@
                         "in": "formData",
                         "description": "slider Description",
                         "type": "string"
-                    },{
+                    },
+                    {
                         "name": "sliderImage",
                         "in": "formData",
                         "required": true,
                         "description": "Slider Image",
                         "type": "file"
-                    } 
-                ]
-                , "responses": {
+                    }
+                ],
+                "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
@@ -327,36 +354,70 @@
                     }
                 }
             }
-        },
-        "definitions": {
-            "Category": {
-                "required": [
-                    "categoryName",
-                    "_id"
-                ],
-                "properties": {
-                    "_id": {
-                        "type": "integer",
-                        "uniqueItems": true
-                    },
-                    "categoryName": {
-                        "type": "string"
-                    },
-                    "categoryImage": {
-                        "type": "string"
-                    }
+        }
+    },
+    "definitions": {
+        "Category": {
+            "required": [
+                "categoryName",
+                "_id"
+            ],
+            "properties": {
+                "_id": {
+                    "type": "integer",
+                    "uniqueItems": true
+                },
+                "categoryName": {
+                    "type": "string"
+                },
+                "categoryImage": {
+                    "type": "string"
                 }
-            },
-            "ServiceResponse": {
-                "properties": {
-                    "messsage": {
-                        "type": "string"
-                    },
-                    "data": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/definitions/ServiceResponse"
-                        }
+            }
+        },
+        "Product": {
+            "required": [
+                "productName",
+                "_id",
+                "productPrice",
+                "productImage",
+                "productSalePrice",
+                "productShortDescription",
+                "category"
+            ],
+            "properties": {
+                "_id": {
+                    "type": "string"
+                },
+                "productName": {
+                    "type": "string"
+                },
+                "category": {
+                    "type": "string"
+                },
+                "productImage":{
+                    "type":"string"
+                },
+                "productPrice":{
+                    "type":"integer"
+                },
+                "productShortDescription":{
+                    "type":"string"
+                },
+                "productSalePrice":{
+                    "type":"string"
+                }
+            }
+        },
+        "ServiceResponse": {
+            "properties": {
+                "messsage": {
+                    "type": "string"
+                },
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ServiceResponse"
                     }
                 }
             }
