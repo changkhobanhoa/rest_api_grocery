@@ -9,7 +9,7 @@
             "url": "https://opensource.org/licenses/MIT"
         }
     },
-    "host": "localhost:4000",
+    "host": "doancs4.onrender.com",
     "basePath": "/",
     "tags": [
         {
