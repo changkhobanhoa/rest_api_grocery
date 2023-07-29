@@ -1,5 +1,5 @@
 const MONGO_DB_CONFIG = {
-  DB: "mongodb://0.0.0.0:27017/grocery",
+  DB: "mongodb+srv://tien:toilaso1@cluster0.inww0ej.mongodb.net/?retryWrites=true&w=majority",
   PAGE_SIZE: 10,
 };
 const STRIPE_CONFIG = {
