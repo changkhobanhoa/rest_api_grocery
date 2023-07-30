@@ -35,6 +35,9 @@ app.use(expressLayouts);
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
+app.use((req, res, next) => {
+  res.status(404).render('pages/404');
+});
 app.get("/", function (req, res) {
   res.render("pages/login");
 });
